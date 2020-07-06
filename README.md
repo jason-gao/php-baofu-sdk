@@ -7,11 +7,7 @@
 
 
 ## 技术栈
-- php + guzzle + memcached + monolog + phpunit
-
-
-## 说明
-- memcache主要用来缓存token
+- php  + monolog + phpunit
 
 	
 ## phpunit test cover 100%
@@ -22,5 +18,4 @@
 	- composer require jason-gao/php-baofu-sdk v1.0.0 	
 
 ## todo
-- 缓存支持redis memcache
-- 完善异常处理
+
