@@ -6,3 +6,4 @@ composer.lock
 tests/coverage/
 .php_cs.cache
 CER/
+baofu-pay.conf
