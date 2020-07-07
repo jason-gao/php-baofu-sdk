@@ -42,7 +42,6 @@ class BaofuPay {
 
 	public static function getCertPrivate() {
 		$file = self::$certPath . self::getConf()['pfxfilename'];
-		var_dump($file);
 
 		return $file;
 	}

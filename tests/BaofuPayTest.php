@@ -39,8 +39,9 @@ class BaofuPayTest extends TestCase {
 </head>
 {$res['formString']}
 </html>";
-		$file = __DIR__.'/pay.html';
-		file_put_contents($file, $html);
+		$file = __DIR__ . '/pay.html';
+		file_put_contents( $file, $html );
+		shell_exec( "open tests/pay.html" );
 	}
 
 
