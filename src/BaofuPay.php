@@ -56,8 +56,9 @@ class BaofuPay {
 		if ( empty( $data ) ) {
 			$data = $_POST;
 		}
-		$Money = isset( $data["Money"] ) ? $data["Money"] : "0";//接收金额
-		$PayID = isset( $data["PayID"] ) ? $data["PayID"] : "";//宝付收银台传空，直连银行传对应PAYID
+		$Money   = isset( $data["Money"] ) ? $data["Money"] : "0";//接收金额
+		$PayID   = isset( $data["PayID"] ) ? $data["PayID"] : "";//宝付收银台传空，直连银行传对应PAYID
+		$TransID = isset( $data["trans_id"] ) ? $data["trans_id"] : "";//商户订单号
 
 		$OrderMoney = (int) ( $Money * 100 );//订单金额(以分为单位)  注意：INT类型取值范围，可以使用更大数据类型的
 
@@ -66,7 +67,7 @@ class BaofuPay {
 		$data_Array["terminal_id"]     = self::getConf()["terminal_id"];//终端号
 		$data_Array["pay_id"]          = $PayID;//PayID传空跳转宝付收银台，传功能ID跳转对应的银行
 		$data_Array["trade_date"]      = Tools::getTime();//下单日期
-		$data_Array["trans_id"]        = "TID" . Tools::getTransid() . Tools::getRand4();//商户订单号（不能重复）
+		$data_Array["trans_id"]        = $TransID?$TransID:"TIDBAOFU" . Tools::getTransid() . Tools::getRand4();//商户订单号（不能重复）
 		$data_Array["order_money"]     = $OrderMoney;//订单金额
 		$data_Array["product_name"]    = self::getConf()["product_name"];//商品名称
 		$data_Array["amount"]          = "1";//商品数量

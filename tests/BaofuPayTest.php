@@ -29,6 +29,7 @@ class BaofuPayTest extends TestCase {
 		$data = [
 			'Money' => 0.01,
 			'PayID' => 3001,
+//			'trans_id' => 'aaabbbccc'
 		];
 		$res  = BaofuPay::pay( $data );
 		$html = "<!DOCTYPE html>
