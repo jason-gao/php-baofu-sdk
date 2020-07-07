@@ -104,7 +104,8 @@ class BaofuPay {
 				"terminal_id"  => self::getConf()["terminal_id"],
 				"version"      => self::getConf()["version"],
 				"data_content" => $Encrypted,
-			]
+			],
+			"data" => $data_Array
 		];
 
 		return $res;
