@@ -115,15 +115,17 @@ class BaofuPay {
 			$data = $_REQUEST;
 		}
 		MLOG::getLoggerInstance()->info( "===================接收网银异步通知========================" );
-		$EndataContent = isset( $data["data_content"] ) ? $data["data_content"] : die( "No parameters are received [data_content]" );
-		$MemberID      = $data['member_id'];//商户号
-		$TerminalID    = $data['terminal_id'];//商户终端号
+		if ( ! isset( $data["data_content"] ) ) {
+			throw new BaofuPayException( "No parameters are received [data_content]" );
+		}
+		$EndataContent = $data["data_content"];
 
 		MLOG::getLoggerInstance()->info( "异步通知原文：" . $EndataContent );
 		$BFRsa        = new BFRSA( self::getCertPrivate(), self::getCertPublic(), self::getConf()["private_key_password"] ); //实例化加密类。
 		$ReturnDecode = $BFRsa->decryptByPublicKey( $EndataContent );//解密返回的报文
 		MLOG::getLoggerInstance()->info( "异步通知解密原文：" . $ReturnDecode );
 
+		$ArrayContent = [];
 		if ( ! empty( $ReturnDecode ) ) {//解析
 			if ( self::getConf()["version"] == "4.2" ) {
 				$ArrayContent = json_decode( $ReturnDecode, true );
@@ -147,7 +149,9 @@ class BaofuPay {
 			//  1、需判断成功金额和订单金额是否一致。
 			//  2、需要做订单重复性较验。
 
-			return $callback;
+			return $callback( $ArrayContent );
+		} else {
+			throw new BaofuPayException( 'pay failed! ' . print_r( $ArrayContent, 1 ) );
 		}
 	}
 
